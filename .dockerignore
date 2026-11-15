@@ -1,0 +1,7 @@
+.git
+.gitignore
+.vscode
+api-test.http
+api-test.php
+test_connection.php
+docs/screenshots

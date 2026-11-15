@@ -1,11 +1,9 @@
-
-
 <?php
 
-$host = 'localhost';
+$host = 'db';
 $dbname = 'mini_ecommerce';
-$username = 'root';
-$password = '';
+$username = 'ecommerce_user';
+$password = 'ecommerce123';
 
 try {
     $pdo = new PDO(
