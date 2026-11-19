@@ -9,8 +9,11 @@ RUN a2enmod rewrite
 
 COPY . .
 
+RUN sed -i 's|RewriteBase /mini-ecommerce-api/|RewriteBase /|' /var/www/html/.htaccess
+
 RUN chown -R www-data:www-data /var/www/html
 
 EXPOSE 80
 
 CMD ["apache2-foreground"]
+

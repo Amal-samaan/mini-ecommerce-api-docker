@@ -1,9 +1,18 @@
+
 <?php
 
-$host = 'db';
-$dbname = 'mini_ecommerce';
-$username = 'ecommerce_user';
-$password = 'ecommerce123';
+if (getenv('DOCKER_ENV') === 'true') {
+    $host = 'db';
+    $username = getenv('MARIADB_USER');
+    $password = getenv('MARIADB_PASSWORD');
+} else {
+  
+    $host = 'localhost';
+    $username = 'root';
+    $password = '';
+}
+
+$dbname = getenv('MARIADB_DATABASE') ?: 'mini_ecommerce';
 
 try {
     $pdo = new PDO(
@@ -15,5 +24,9 @@ try {
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 } catch (PDOException $e) {
-    die("Database connection failed: " . $e->getMessage());
+    error_log($e->getMessage());
+    http_response_code(500);
+    die(json_encode([
+        'message' => 'Database connection failed'
+    ]));
 }

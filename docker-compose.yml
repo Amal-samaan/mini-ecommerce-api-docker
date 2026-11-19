@@ -1,10 +1,17 @@
 
+
 services:
   app:
     build: .
     container_name: mini-ecommerce-app
     ports:
       - "8080:80"
+    environment:
+      DOCKER_ENV: "true"
+      MARIADB_DATABASE: ${MARIADB_DATABASE}
+      MARIADB_USER: ${MARIADB_USER}
+      MARIADB_PASSWORD: ${MARIADB_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
     depends_on:
       db:
         condition: service_healthy
@@ -14,10 +21,10 @@ services:
     container_name: mini-ecommerce-db
     restart: always
     environment:
-      MARIADB_ROOT_PASSWORD: root123
-      MARIADB_DATABASE: mini_ecommerce
-      MARIADB_USER: ecommerce_user
-      MARIADB_PASSWORD: ecommerce123
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+      MARIADB_DATABASE: ${MARIADB_DATABASE}
+      MARIADB_USER: ${MARIADB_USER}
+      MARIADB_PASSWORD: ${MARIADB_PASSWORD}
     ports:
       - "3307:3306"
     volumes:
@@ -31,3 +38,5 @@ services:
 
 volumes:
   db_data:
+
+
